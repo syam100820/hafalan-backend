@@ -23,6 +23,7 @@ app.get('/riwayat', async (req, res) => {
 });
 
 // 2. Simpan data ke Cloud (POST)
+// Pastikan rute ini '/riwayat' agar cocok dengan kode Flutter kita
 app.post('/riwayat', async (req, res) => {
   const { nama_surat, nomor_surat, skor, tanggal } = req.body;
   try {
@@ -32,9 +33,14 @@ app.post('/riwayat', async (req, res) => {
     );
     res.status(201).send("Berhasil disimpan di Cloud!");
   } catch (err) {
+    console.error(err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
+// Jalankan Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`API menyala di port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`API menyala di port ${PORT}`);
+  console.log(`Rute POST: https://namaproject.up.railway.app/riwayat`);
+});
